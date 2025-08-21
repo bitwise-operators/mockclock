@@ -1,0 +1,57 @@
+{
+    "name": "bitwise-operators/mockclock",
+    "description": "A simple implementation of psr/clock to be used in unit testing",
+    "type": "library",
+    "url": "https://github.com/bitwise-operators/mockclock",
+    "keywords": [
+        "mocking",
+        "phpunit",
+        "psr-clock",
+        "testing"
+    ],
+    "authors": [
+        {
+            "name": "B.J.Scharp",
+            "email": "open-source@bitwise-operators.com",
+            "homepage": "https://github.com/bitwise-operators",
+            "role": "Author"
+        }
+    ],
+    "require": {
+        "php": ">=8.3",
+        "psr/clock": "~1.0"
+    },
+    "require-dev": {
+        "phpstan/phpstan": "^2.1",
+        "phpunit/phpunit": "^12.3",
+        "rector/rector": "^2.1",
+        "symplify/easy-coding-standard": "^12.5"
+    },
+    "license": "BSD-3-Clause",
+    "autoload": {
+        "psr-4": {
+            "Bitwise\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Tests\\": "tests"
+        }
+    },
+    "scripts": {
+        "analyze": "php -d memory_limit=-1 vendor/bin/phpstan --configuration=dev/phpstan.neon analyse",
+        "codestyle": "php vendor/bin/ecs check --config=dev/ecs.php",
+        "codestyle-fix": "@codestyle --fix",
+        "pre-commit": [
+            "@analyze",
+            "@tests",
+            "@rector-fix",
+            "@codestyle-fix",
+            "@sanitize"
+        ],
+        "rector": "@rector-fix --dry-run",
+        "rector-fix": "php vendor/bin/rector --config=dev/rector.php",
+        "sanitize": "grep -e '\\s+$' -E --include='*.php' -l -r dev src tests | xargs -r -d '\\n' sed -i -E -e 's/\\s+$//g'",
+        "tests": "php vendor/phpunit/phpunit/phpunit --configuration dev/phpunit.xml --testsuite unit"
+    }
+}
