@@ -94,8 +94,8 @@ class MockClock implements ClockInterface
     /**
      * Increases the clock by the applied amount of seconds
      *
-     * @phpstan-assert positive-int $seconds
-     * @psalm-assert positive-int $seconds
+     * @phpstan-assert float | positive-int $seconds
+     * @psalm-assert float | positive-int $seconds
      * @return $this
      */
     public function sleep(
