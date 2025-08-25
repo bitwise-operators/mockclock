@@ -14,7 +14,7 @@ Unless the clock is actively modified, the time on the clock does not change aft
 #[\PHPUnit\Framework\Attributes\Test]
 public function test_the_clock(
 ): void {
-    $clock = new \Bitwise\MockClock();
+    $clock = new \BitwiseOperators\MockClock();
 
     $myClass = new MyClass(clock: $clock);
 
@@ -60,10 +60,23 @@ Turns back the time on the clock by the specified amount.
 ### Chaining
 Aside from the `now()` method, all methods return the clock itself, allowing for chaining:
 ```php
-$clock = new \Bitwise\MockClock()
+$clock = new \BitwiseOperators\MockClock()
     ->set(new \DateTime('1995-06-08'))
     ->startOfDay()
     ->add(new \DateTimeInterval('PT1H'))
     ->setTimezone('Europe/Copenhagen')
 ;
 ```
+
+### Extending
+The MockClock is designed to be extendable. Simply create your own Clock class that extends the MockClock and add any extra methods you might need:
+```php
+namespace Tests\Support;
+
+class MyMockClock extends \BitwiseOperators\MockClock {
+    public function setToEpoch(): static {
+        return $this->set(new \DateTime('1970-01-01T00:00:00'));
+    }
+}
+```
+Even if you don't add methods immediately, extending the class and using your own is always a good idea as a form of [dependency inversion](https://en.wikipedia.org/wiki/Dependency_inversion_principle).

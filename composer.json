@@ -30,7 +30,7 @@
     "license": "BSD-3-Clause",
     "autoload": {
         "psr-4": {
-            "Bitwise\\": "src/"
+            "BitwiseOperators\\": "src/"
         }
     },
     "autoload-dev": {

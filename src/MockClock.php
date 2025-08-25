@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Bitwise;
+namespace BitwiseOperators;
 
 use DateInterval;
 use DateTimeImmutable;
@@ -21,7 +21,7 @@ use function sprintf;
  */
 class MockClock implements ClockInterface
 {
-    private DateTimeImmutable $now;
+    protected DateTimeImmutable $now;
 
     public function __construct(
     ) {
@@ -33,7 +33,7 @@ class MockClock implements ClockInterface
      *
      * @return $this
      */
-    public function add(
+    final public function add(
         DateInterval $interval,
     ): static {
         $this->now = $this->now->add($interval);
@@ -46,7 +46,7 @@ class MockClock implements ClockInterface
      *
      * @return $this
      */
-    public function modify(
+    final public function modify(
         string $modifier,
     ): static {
         $this->now = $this->now->modify($modifier);
@@ -55,7 +55,7 @@ class MockClock implements ClockInterface
     }
 
     #[Override]
-    public function now(
+    final public function now(
     ): DateTimeImmutable {
         return clone $this->now;
     }
@@ -65,7 +65,7 @@ class MockClock implements ClockInterface
      *
      * @return $this
      */
-    public function set(
+    final public function set(
         DateTimeInterface $date,
     ): static {
         $this->now = DateTimeImmutable::createFromInterface($date);
@@ -79,7 +79,7 @@ class MockClock implements ClockInterface
      * @param DateTimeZone | non-empty-string $timezone
      * @return $this
      */
-    public function setTimezone(
+    final public function setTimezone(
         DateTimeZone | string $timezone,
     ): static {
         if (!$timezone instanceof DateTimeZone) {
@@ -98,7 +98,7 @@ class MockClock implements ClockInterface
      * @psalm-assert float | positive-int $seconds
      * @return $this
      */
-    public function sleep(
+    final public function sleep(
         float | int $seconds,
     ): static {
         if ($seconds <= 0) {
@@ -116,7 +116,7 @@ class MockClock implements ClockInterface
      *
      * @return $this
      */
-    public function startOfDay(
+    final public function startOfDay(
     ): static {
         $this->now = $this->now->setTime(hour: 0, minute: 0, second: 0, microsecond: 0);
 
@@ -128,7 +128,7 @@ class MockClock implements ClockInterface
      *
      * @return $this
      */
-    public function sub(
+    final public function sub(
         DateInterval $interval,
     ): static {
         $this->now = $this->now->sub($interval);
